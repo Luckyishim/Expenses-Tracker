@@ -1,0 +1,359 @@
+.home-page {
+  min-height: 100vh;
+  color: #292a27;
+  background: #f8f7f0;
+  display: flex;
+  flex-direction: column;
+}
+
+.home-header {
+  height: 43px;
+  padding: 0 28px;
+  border-bottom: 2px solid #e8e6dc;
+  background: #faf9f2;
+  display: flex;
+  align-items: center;
+}
+
+.home-logo {
+  color: #4e694d;
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+  letter-spacing: -0.4px;
+}
+.home-nav {
+  display: flex;
+  gap: 27px;
+  margin: 0 auto;
+  height: 100%;
+}
+.home-nav a {
+  height: 100%;
+  padding-top: 15px;
+  color: #333630;
+  font-size: 8px;
+  text-decoration: none;
+}
+.home-nav a.active {
+  color: #4c684d;
+  border-bottom: 1px solid #4c684d;
+}
+.header-actions {
+  display: flex;
+  gap: 16px;
+}
+.header-actions button {
+  width: 16px;
+  height: 18px;
+  padding: 0;
+  border: 0;
+  color: #506650;
+  background: transparent;
+  cursor: pointer;
+}
+.header-actions svg,
+.date-input svg {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.dashboard {
+  width: min(646px, calc(100% - 40px));
+  margin: 19px auto;
+  flex: 1;
+}
+.summary-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+.summary-card,
+.expense-panel,
+.history-panel {
+  border: 1px solid #efede5;
+  border-radius: 9px;
+  background: #f8f7f0;
+  box-shadow: 2px 3px 5px rgb(43 40 29 / 0.16);
+}
+.summary-card {
+  height: 91px;
+  padding: 12px 0;
+  text-align: center;
+}
+.summary-card span {
+  display: block;
+  font-size: 8px;
+}
+.summary-card strong {
+  display: block;
+  margin: 3px 0 2px;
+  font-size: 30px;
+  line-height: 1;
+  letter-spacing: 0.3px;
+}
+.summary-card small {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+  color: #6a6d66;
+  font-size: 7px;
+}
+.summary-card small svg {
+  width: 9px;
+  height: 9px;
+  fill: none;
+  stroke: #1e241d;
+  stroke-width: 1.8;
+}
+.summary-card small i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #526751;
+  position: relative;
+}
+.summary-card small i::after {
+  content: "✓";
+  color: #fff;
+  font-size: 5px;
+  left: 1px;
+  position: absolute;
+  top: -1px;
+}
+.expenses strong {
+  color: #ce9090;
+}
+.income strong {
+  color: #dabb5b;
+}
+.balance strong {
+  color: #91a98e;
+}
+
+.entry-switch {
+  width: 164px;
+  height: 30px;
+  margin: 20px auto;
+  padding: 2px;
+  border: 1px solid #e6e3da;
+  border-radius: 20px;
+  display: flex;
+}
+.entry-switch button {
+  flex: 1;
+  border: 0;
+  border-radius: 16px;
+  color: #292c28;
+  background: transparent;
+  font-size: 8px;
+  cursor: pointer;
+}
+.entry-switch .selected {
+  color: #cf8f8f;
+  background: #f8f7f0;
+  box-shadow: 1px 1px 3px rgb(35 34 29 / 0.12);
+}
+
+.dashboard-content {
+  display: grid;
+  grid-template-columns: 316px 1fr;
+  gap: 14px;
+}
+.expense-panel {
+  min-height: 393px;
+  padding: 20px 21px;
+}
+.expense-panel h1 {
+  margin: 0 0 14px;
+  font-size: 16px;
+  font-weight: 500;
+}
+.expense-panel h1 span {
+  width: 13px;
+  height: 13px;
+  margin-right: 5px;
+  border: 1px solid #d18b8b;
+  border-radius: 50%;
+  color: #d18b8b;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  line-height: 1;
+  vertical-align: 1px;
+}
+.expense-panel form,
+.expense-panel label {
+  display: block;
+}
+.expense-panel label {
+  margin-top: 9px;
+  color: #41423e;
+  font-size: 8px;
+}
+.expense-panel input,
+.expense-panel textarea {
+  width: 100%;
+  margin-top: 4px;
+  border: 1px solid #e0ddd4;
+  border-radius: 5px;
+  outline: none;
+  color: #3e403b;
+  background: #faf9f3;
+  box-shadow: inset 1px 1px 2px rgb(69 64 48 / 0.11);
+  font: inherit;
+}
+.expense-panel input {
+  height: 29px;
+  padding: 0 9px;
+  font-size: 10px;
+}
+.expense-panel textarea {
+  height: 61px;
+  padding: 9px;
+  resize: none;
+  font-size: 9px;
+}
+.expense-panel input::placeholder,
+.expense-panel textarea::placeholder {
+  color: #75808e;
+}
+.amount-input,
+.date-input {
+  position: relative;
+}
+.amount-input b {
+  position: absolute;
+  top: 12px;
+  left: 10px;
+  color: #4d4d49;
+  font-size: 9px;
+  font-weight: 400;
+}
+.amount-input input {
+  padding-left: 27px;
+}
+.date-input svg {
+  width: 14px;
+  height: 14px;
+  color: #343733;
+  position: absolute;
+  right: 9px;
+  top: 11px;
+}
+.date-input input {
+  padding-left: 18px;
+}
+.add-transaction {
+  width: 100%;
+  height: 37px;
+  margin-top: 12px;
+  border: 1px solid #eeece4;
+  border-radius: 7px;
+  color: #cf8c8c;
+  background: #faf9f4;
+  box-shadow: 2px 3px 5px rgb(40 37 28 / 0.16);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.history-panel {
+  min-height: 389px;
+  padding: 21px;
+}
+.history-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.history-heading h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+}
+.history-heading a {
+  color: #4f644d;
+  font-size: 8px;
+  text-decoration: none;
+}
+.empty-history {
+  height: 308px;
+  display: grid;
+  place-items: center;
+  color: #aaa99f;
+  font-size: 10px;
+}
+.home-footer {
+  height: 59px;
+  padding: 0 60px;
+  border-top: 1px solid #dedcd3;
+  display: flex;
+  align-items: center;
+  gap: 130px;
+}
+.home-footer strong {
+  font-size: 16px;
+  font-weight: 500;
+}
+.home-footer span {
+  font-size: 9px;
+}
+
+@media (max-width: 650px) {
+  .home-header {
+    padding: 0 16px;
+  }
+  .home-nav {
+    gap: 13px;
+  }
+  .dashboard-content {
+    grid-template-columns: 1fr;
+  }
+  .home-footer {
+    height: auto;
+    padding: 22px;
+    gap: 10px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .summary-card strong {
+    font-size: clamp(19px, 6vw, 30px);
+  }
+}
+@media (max-width: 420px) {
+  .home-logo {
+    font-size: 13px;
+  }
+  .home-nav {
+    display: none;
+  }
+  .header-actions {
+    margin-left: auto;
+  }
+  .dashboard {
+    width: min(100% - 24px, 646px);
+  }
+  .summary-cards {
+    gap: 7px;
+  }
+  .summary-card {
+    padding-top: 14px;
+  }
+  .summary-card small {
+    font-size: 6px;
+  }
+  .expense-panel,
+  .history-panel {
+    padding: 17px;
+  }
+}
