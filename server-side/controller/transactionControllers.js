@@ -1,10 +1,12 @@
+import Balance from "../model/Balance.js";
+
 export const getBalance = async (req, res) => {
     try {
-        const result = await Transaction.aggregate([
+        const result = await Balance.aggregate([
             {
                 $group: {
                     _id: "$type",
-                    total: { $sum: "NRS. amount" }
+                    total: { $sum: "$amount" }
                 }
             }
         ])
@@ -19,7 +21,7 @@ export const getBalance = async (req, res) => {
 
         const balance = income - expenses;
 
-        res.join({ income, expenses, balance })
+        res.status(200).json({ income, expenses, balance });
     } catch (error) {
         res.status(500).json({ message: error.message })
     }

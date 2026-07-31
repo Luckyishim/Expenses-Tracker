@@ -1,4 +1,4 @@
-import express, { application } from "express";
+import express from "express";
 import Balance from "../model/Balance.js";
 import { getBalance } from "../controller/transactionControllers.js";
 
@@ -15,6 +15,9 @@ router.get('/', async (req, res) => {
         res.status(500).json({ error: 'Server error while fetching transactions' });
     }
 });
+
+//To get the balance of the user
+router.get("/balance", getBalance);
 
 // Get transaction by ID
 router.get('/:id', async (req, res) => {
@@ -76,8 +79,5 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
-
-//Balancing expenses and income
-router.get("/balance", getBalance)
 
 export default router;
