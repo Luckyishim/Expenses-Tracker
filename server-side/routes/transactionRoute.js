@@ -4,8 +4,6 @@ import { getBalance } from "../controller/transactionControllers.js";
 
 const router = express.Router();
 
-
-
 // Get all transactions
 router.get('/', async (req, res) => {
     try {
@@ -16,7 +14,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-//To get the balance of the user
+// To get the balance of the user
 router.get("/balance", getBalance);
 
 // Get transaction by ID
@@ -46,6 +44,9 @@ router.put('/:id', async (req, res) => {
         if (error.name === 'CastError') {
             return res.status(400).json({ error: 'Invalid transaction format' });
         }
+        if (error.name === 'ValidationError') {
+            return res.status(400).json({ error: error.message });
+        }
         res.status(500).json({ error: 'Server error while updating transactions' });
     }
 });
@@ -53,13 +54,12 @@ router.put('/:id', async (req, res) => {
 // Create transaction
 router.post('/', async (req, res) => {
     try {
-        const { category, amount, type, notes } = req.body;
-        if (!category?.trim() || amount === undefined || amount === null || !type?.trim() || !notes?.trim()) {
-            return res.status(400).json({ error: 'The fields are required to be filled' });
-        }
-        const newBalance = await Balance.create(req.body);
+        const newBalance = await Balance.create(req.body); // schema handles validation
         res.status(201).json(newBalance);
     } catch (error) {
+        if (error.name === "ValidationError") {
+            return res.status(400).json({ error: error.message }); 
+        }
         console.error(error);
         res.status(500).json({ error: 'Server error while creating new balance' });
     }
@@ -78,6 +78,5 @@ router.delete('/:id', async (req, res) => {
         res.status(500).json({ error: "Server error while deleting transactions" });
     }
 });
-
 
 export default router;
