@@ -27,5 +27,5 @@ const expenseSchema = new mongoose.Schema({
     timestamps: true,
 })
 
-export const budget = mongoose.budget("ExpenseTracker", expenseSchema)
+export default mongoose.model("Balance", expenseSchema)
 
