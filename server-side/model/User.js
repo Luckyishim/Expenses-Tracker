@@ -10,14 +10,16 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true, "Email is required"],
         trim: true,
+        unique: true, 
+        match: [/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Invalid email address"]
     },
     password: {
-        type: password,
-        required: [true, "Passowrd is requried"],
-        minlength: [8, "Password must at least have 6 characters"]
+        type: String,
+        required: [true, "Password is required"], 
+        minlength: [8, "Password must be at least 8 characters"] 
     },
-
 }, {
     timestamps: true,
 })
+
 export default mongoose.model("User", userSchema)

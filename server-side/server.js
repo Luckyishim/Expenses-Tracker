@@ -4,6 +4,7 @@ import cors from "cors";
 import { configDotenv } from "dotenv";
 import connectDB from "./config/db";
 import router from "./routes/transactionRoute";
+import authRoute from "./routes/userRoute.js"
 configDotenv();
 connectDB();
 
@@ -13,6 +14,7 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 app.use("/api/transactions" ,  router)
+app.use("/api/auth", authRoute)
 
 
 
