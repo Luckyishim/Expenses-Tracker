@@ -4,7 +4,11 @@ import { clearSession } from "../services/session";
 
 
 function Navbar({ activePage }) {
-  const handleLogout = () => {
+  const handleLogout = (event) => {
+    if (!window.confirm("Are you sure you want to sign out?")) {
+      event.preventDefault();
+      return;
+    }
     clearSession();
   };
 

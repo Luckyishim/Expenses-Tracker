@@ -36,6 +36,7 @@ function Profile() {
   };
 
   const signOut = () => {
+    if (!window.confirm("Are you sure you want to sign out?")) return;
     clearSession();
     navigate("/login");
   };

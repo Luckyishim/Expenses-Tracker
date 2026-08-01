@@ -1,9 +1,11 @@
 import Balance from "../model/Balance.js";
+import mongoose from "mongoose";
 
 // Calculates totals for the authenticated user's transactions only.
 export const getBalance = async (req, res) => {
     try {
-        const match = { user: req.user.id };
+
+        const match = { user: new mongoose.Types.ObjectId(req.user.id) };
         const result = await Balance.aggregate([
             { $match: match },
             {
