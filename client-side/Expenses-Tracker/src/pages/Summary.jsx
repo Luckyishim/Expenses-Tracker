@@ -42,8 +42,8 @@ function Summary() {
       <section className="summary-content">
         <div className="summary-options">
           <div className="summary-toggle">
-            <button type="button" className={type === "expenses" ? "selected" : ""} onClick={() => setType("expenses")}>Expenses</button>
-            <button type="button" className={type === "income" ? "selected" : ""} onClick={() => setType("income")}>Income</button>
+            <button type="button" className={type === "expenses" ? "selected is-expenses" : "is-expenses"} onClick={() => setType("expenses")}>Expenses</button>
+            <button type="button" className={type === "income" ? "selected is-income" : "is-income"} onClick={() => setType("income")}>Income</button>
           </div>
           <div className="summary-toggle period-toggle">
             <button type="button" className={period === "this" ? "selected" : ""} onClick={() => setPeriod("this")}>This Month</button>
@@ -55,7 +55,7 @@ function Summary() {
         {loading && <p className="summary-message">Loading your summary…</p>}
 
         <div className="summary-grid">
-          <section className="breakdown-card">
+          <section className={`breakdown-card ${type}`}>
             <p className="total-label">{type === "expenses" ? "Total Spent" : "Total Income"}</p>
             <strong className="total-spent">{formatCurrency(summary.total)}</strong>
             <h1>Category Breakdown</h1>
@@ -70,7 +70,7 @@ function Summary() {
               })}
             </div>
           </section>
-          <aside className="balance-card"><span>Available Balance</span><strong>{formatCurrency(summary.balance)}</strong></aside>
+          <aside className={`balance-card ${summary.balance < 0 ? "negative" : ""}`}><span>Available Balance</span><strong>{formatCurrency(summary.balance)}</strong></aside>
         </div>
       </section>
       <Footer />
