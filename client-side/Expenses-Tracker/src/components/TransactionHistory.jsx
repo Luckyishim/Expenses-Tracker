@@ -24,31 +24,34 @@ const TransactionHistory = ({ transactions }) => {
                     No Recent Transactions
                 </div>
             ) : (
-                <div className="transaction-list">
-                    {recentTransactions.map(transaction => (
-                        <div key={transaction._id} className="transaction-item">
+                <>
+                    <h2 className="recent-history-title">Recent 5 Transactions</h2>
+                    <div className="transaction-list">
+                        {recentTransactions.map(transaction => (
+                            <div key={transaction._id} className="transaction-item">
 
-                            <div className="transaction-info">
-                                <span className="transaction-category">
-                                    {transaction.category}
-                                </span>
-                                <span className="transaction-data">
-                                    {formatDate(transaction.date)}
-                                </span>
-                                {transaction.notes && (
-                                    <span className="transaction-notes">
-                                        {transaction.notes}
+                                <div className="transaction-info">
+                                    <span className="transaction-category">
+                                        {transaction.category}
                                     </span>
-                                )}
-                            </div>
+                                    <span className="transaction-data">
+                                        {formatDate(transaction.date)}
+                                    </span>
+                                    {transaction.notes && (
+                                        <span className="transaction-notes">
+                                            {transaction.notes}
+                                        </span>
+                                    )}
+                                </div>
 
-                            <span className={`transaction-amount ${transaction.type}`}>
-                                {transaction.type === 'income' ? '+' : '-'}
-                                {formatCurrency(transaction.amount)}
-                            </span>
-                        </div>
-                    ))}
-                </div>
+                                <span className={`transaction-amount ${transaction.type}`}>
+                                    {transaction.type === 'income' ? '+' : '-'}
+                                    {formatCurrency(transaction.amount)}
+                                </span>
+                            </div>
+                        ))}
+                    </div>
+                </>
             )}
         </section>
     )
