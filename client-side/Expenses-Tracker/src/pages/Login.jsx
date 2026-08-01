@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { saveSession } from "../services/session";
 import Eye_Closed from "../assets/Eye_Closed.png";
 import Eye from "../assets/Eye.png"
 
@@ -23,8 +24,8 @@ function Login() {
 
     try {
       const response = await axios.post("http://localhost:5067/api/auth/login", data);
-      localStorage.setItem("moneyTrackerUser", JSON.stringify(response.data.user));
-      navigate("/home");
+      saveSession(response.data);
+      navigate(location.state?.from || "/home", { replace: true });
     } catch (error) {
       setSubmitError(error.response?.data?.message || "Unable to log in. Please try again.");
     }

@@ -1,157 +1,89 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import "../styles/Transaction.css";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { useTransactions } from "../hooks/useTransaction";
 
-const CategoryIcon = ({ type }) => {
-  if (type === "food")
-    return (
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M7 3v8M4.5 3v5a2.5 2.5 0 0 0 5 0V3M7 11v10M16 3v18M13 3v6h6V3" />
-      </svg>
-    );
-  if (type === "transport")
-    return (
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M4 7h11l3 4v6H5a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1Z" />
-        <path d="M15 7v5h4M7 19a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3ZM16 19a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z" />
-      </svg>
-    );
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <rect x="3" y="6" width="18" height="12" rx="1" />
-      <circle cx="12" cy="12" r="2.5" />
-      <path d="M6 9h.1M18 15h.1" />
-    </svg>
-  );
-};
+const formatCurrency = (amount) => new Intl.NumberFormat("en-NP", {
+  style: "currency",
+  currency: "NPR",
+}).format(amount);
 
+// Shows, filters, and deletes only the signed-in user's transaction records.
 function Transaction() {
-  const [activeView, setActiveView] = useState("expense");
+  const [activeType, setActiveType] = useState("expenses");
+  const [filters, setFilters] = useState({ category: "", from: "", to: "" });
+  const { transactions, loading, error, deleteTransaction } = useTransactions();
 
-  const transactions = [
-    [
-      "Food & Dining",
-      "Weekly groceries",
-      "Nov 24, 2024",
-      "-$142.50",
-      "food",
-      "expense",
-    ],
-    [
-      "Transportation",
-      "Gas refill",
-      "Nov 22, 2024",
-      "-$65.00",
-      "transport",
-      "expense",
-    ],
-    [
-      "Salary",
-      "Monthly paycheck",
-      "Nov 20, 2024",
-      "+$3,200.00",
-      "salary",
-      "income",
-    ],
-  ];
-
-  const visibleTransactions = transactions.filter(
-    ([, , , , , status]) => status === activeView,
+  const categories = useMemo(
+    () => [...new Set(transactions.filter((item) => item.type === activeType).map((item) => item.category))],
+    [transactions, activeType],
   );
+
+  const visibleTransactions = useMemo(() => transactions.filter((item) => {
+    const date = item.date.slice(0, 10);
+    return item.type === activeType
+      && (!filters.category || item.category === filters.category)
+      && (!filters.from || date >= filters.from)
+      && (!filters.to || date <= filters.to);
+  }), [transactions, activeType, filters]);
+
+  const clearFilters = () => setFilters({ category: "", from: "", to: "" });
+
+  const removeTransaction = async (transaction) => {
+    if (window.confirm(`Delete ${transaction.category} for ${formatCurrency(transaction.amount)}?`)) {
+      await deleteTransaction(transaction._id);
+    }
+  };
 
   return (
     <main className="transactions-page">
       <Navbar activePage="transactions" />
-
       <section className="transactions-content" aria-label="Transactions">
         <div className="transaction-switch">
-          <button
-            className={activeView === "expense" ? "selected" : ""}
-            type="button"
-            onClick={() => setActiveView("expense")}
-          >
+          <button className={activeType === "expenses" ? "selected" : ""} type="button" onClick={() => setActiveType("expenses")}>
             Expenses
           </button>
-          <button
-            type="button"
-            className={activeView === "income" ? "selected is-income" : "is-income"}
-            onClick={() => setActiveView("income")}
-          >
+          <button type="button" className={activeType === "income" ? "selected is-income" : "is-income"} onClick={() => setActiveType("income")}>
             Income
           </button>
         </div>
-        <form className="transaction-filters">
-          <label>
-            Category
-            <div className="select-field">
-              All Categories <span>⌄</span>
-            </div>
+
+        <div className="transaction-filters">
+          <label>Category
+            <select className="select-field" value={filters.category} onChange={(event) => setFilters({ ...filters, category: event.target.value })}>
+              <option value="">All Categories</option>
+              {categories.map((category) => <option key={category} value={category}>{category}</option>)}
+            </select>
           </label>
-          <label>
-            From
-            <input type="text" placeholder="mm/dd/yyyy" />
+          <label>From
+            <input type="date" value={filters.from} onChange={(event) => setFilters({ ...filters, from: event.target.value })} />
           </label>
-          <label>
-            To
-            <input type="text" placeholder="mm/dd/yyyy" />
+          <label>To
+            <input type="date" value={filters.to} onChange={(event) => setFilters({ ...filters, to: event.target.value })} />
           </label>
-          <button type="button" className="apply-filter">
-            Apply
-          </button>
-          <button type="button" className="clear-filter">
-            Clear Filters
-          </button>
-        </form>
+          <button type="button" className="clear-filter" onClick={clearFilters}>Clear Filters</button>
+        </div>
+
+        {error && <p className="transaction-message error" role="alert">{error}</p>}
+        {loading && <p className="transaction-message">Loading your transactions…</p>}
 
         <div className="transactions-table-wrap">
           <table className="transactions-table">
-            <thead>
-              <tr>
-                <th>Category</th>
-                <th>Note</th>
-                <th>Date</th>
-                <th>Amount</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
+            <thead><tr><th>Category</th><th>Note</th><th>Date</th><th>Amount</th><th>Actions</th></tr></thead>
             <tbody>
-              {visibleTransactions.map(
-                ([category, note, date, amount, type, status]) => (
-                  <tr key={category}>
-                    <td>
-                      <span className="category-icon">
-                        <CategoryIcon type={type} />
-                      </span>
-                      {category}
-                    </td>
-                    <td>{note}</td>
-                    <td>{date}</td>
-                    <td className={status}>{amount}</td>
-                    <td>
-                      <button
-                        type="button"
-                        aria-label={`Edit ${category}`}
-                        className="row-action"
-                      >
-                        <svg viewBox="0 0 24 24">
-                          <path d="m4 16.5-.5 4 4-.5L18 9.5 14.5 6 4 16.5Z" />
-                          <path d="m13.5 7 3.5 3.5" />
-                        </svg>
-                      </button>
-                      <button
-                        type="button"
-                        aria-label={`Delete ${category}`}
-                        className="row-action"
-                      >
-                        <svg viewBox="0 0 24 24">
-                          <path d="M5 7h14M9 7V4h6v3M7 7l1 13h8l1-13M10 11v5M14 11v5" />
-                        </svg>
-                      </button>
-                    </td>
-                  </tr>
-                ),
+              {!loading && visibleTransactions.length === 0 && (
+                <tr><td className="no-transactions" colSpan="5">No {activeType} match these filters.</td></tr>
               )}
+              {visibleTransactions.map((transaction) => (
+                <tr key={transaction._id}>
+                  <td><span className="category-icon">{transaction.category.charAt(0)}</span>{transaction.category}</td>
+                  <td>{transaction.notes || "—"}</td>
+                  <td>{new Date(transaction.date).toLocaleDateString("en-NP", { year: "numeric", month: "short", day: "numeric" })}</td>
+                  <td className={transaction.type}>{transaction.type === "income" ? "+" : "-"}{formatCurrency(transaction.amount)}</td>
+                  <td><button type="button" aria-label={`Delete ${transaction.category}`} className="row-action delete-action" onClick={() => removeTransaction(transaction)}>Delete</button></td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>

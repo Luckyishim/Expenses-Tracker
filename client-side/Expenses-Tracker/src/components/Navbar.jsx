@@ -1,10 +1,11 @@
 import "../styles/Navbar.css";
 import { Link } from "react-router-dom";
+import { clearSession } from "../services/session";
 
 
 function Navbar({ activePage }) {
   const handleLogout = () => {
-    localStorage.removeItem("moneyTrackerUser");
+    clearSession();
   };
 
   return (

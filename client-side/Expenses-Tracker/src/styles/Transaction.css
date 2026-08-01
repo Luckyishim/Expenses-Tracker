@@ -189,7 +189,7 @@
   stroke-linejoin: round;
 }
 
-.transactions-table .expense {
+.transactions-table .expenses {
   color: #925d5c;
   font-weight: 700;
 }
@@ -209,6 +209,35 @@
   background: transparent;
   vertical-align: middle;
   cursor: pointer;
+}
+
+.delete-action {
+  width: auto;
+  height: auto;
+  color: #a04a43;
+  font-size: 12px;
+  text-decoration: underline;
+}
+
+.no-transactions {
+  padding: 36px 12px;
+  color: #777a73;
+  text-align: center;
+}
+
+.transaction-message {
+  margin: 0 0 16px;
+  border-radius: 8px;
+  padding: 11px 13px;
+  background: #efeee7;
+  color: #4a5348;
+  font-size: 13px;
+}
+
+.transaction-message.error {
+  border: 1px solid #efbdb8;
+  background: #fbe8e6;
+  color: #9d3f34;
 }
 
 @media (max-width: 760px) {

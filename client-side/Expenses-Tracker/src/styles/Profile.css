@@ -114,6 +114,26 @@
 .account-card .sign-out {
   color: #bd7b7b;
 }
+.account-card button.sign-out {
+  width: 100%;
+  padding: 12px 0;
+  border: 0;
+  border-top: 1px solid #e3e1d9;
+  display: flex;
+  justify-content: space-between;
+  background: transparent;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+.profile-message {
+  margin: 14px 0 0;
+  border-radius: 6px;
+  padding: 9px 11px;
+  font-size: 12px;
+}
+.profile-message.success { color: #386237; background: #e8f3e7; }
+.profile-message.error { color: #9d3f34; background: #fbe8e6; }
 /* .site-footer {
   min-height: 62px;
   padding: 0 max(56px, calc((100% - 712px) / 2));

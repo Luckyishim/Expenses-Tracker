@@ -1,106 +1,81 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import "../styles/Summary.css";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { useTransactions } from "../hooks/useTransaction";
 
+const formatCurrency = (amount) => new Intl.NumberFormat("en-NP", { style: "currency", currency: "NPR" }).format(amount);
 
+const monthBounds = (offset) => {
+  const now = new Date();
+  const start = new Date(now.getFullYear(), now.getMonth() + offset, 1);
+  const end = new Date(now.getFullYear(), now.getMonth() + offset + 1, 1);
+  return { start, end };
+};
+
+// Calculates each signed-in user's monthly totals and category breakdown from live records.
 function Summary() {
-  const [view, setView] = useState("expense");
-  const [timeframe, setTimeframe] = useState("this");
+  const [type, setType] = useState("expenses");
+  const [period, setPeriod] = useState("this");
+  const { transactions, loading, error } = useTransactions();
 
-  const expenseCategories = [
-    ["Housing", "$1,800.00 (42%)", "42"],
-    ["Food & Dining", "$850.00 (20%)", "20"],
-    ["Transportation", "$420.00 (10%)", "10"],
-    ["Entertainment", "$310.00 (7%)", "7"],
-  ];
-
-  const incomeCategories = [
-    ["Salary", "$4,500.00 (77%)", "77"],
-    ["Freelance", "$800.00 (14%)", "14"],
-    ["Investments", "$350.00 (6%)", "6"],
-  ];
-
-  const totals = {
-    this: { expenses: 4280.5, income: 5650, balance: 1370 },
-    last: { expenses: 3890.75, income: 5020, balance: 1129.25 },
-  };
-
-  const currentTotals = totals[timeframe];
-  const categories = view === "expense" ? expenseCategories : incomeCategories;
-
-  const formatCurrency = (n) =>
-    `$${n.toLocaleString(undefined, { minimumFractionDigits: 2 })}`;
+  const summary = useMemo(() => {
+    const { start, end } = monthBounds(period === "this" ? 0 : -1);
+    const records = transactions.filter((item) => {
+      const date = new Date(item.date);
+      return date >= start && date < end;
+    });
+    const income = records.filter((item) => item.type === "income").reduce((sum, item) => sum + item.amount, 0);
+    const expenses = records.filter((item) => item.type === "expenses").reduce((sum, item) => sum + item.amount, 0);
+    const byCategory = records.filter((item) => item.type === type).reduce((groups, item) => {
+      groups[item.category] = (groups[item.category] || 0) + item.amount;
+      return groups;
+    }, {});
+    const total = type === "income" ? income : expenses;
+    const categories = Object.entries(byCategory).sort(([, left], [, right]) => right - left);
+    return { income, expenses, balance: income - expenses, total, categories };
+  }, [transactions, type, period]);
 
   return (
     <main className="summary-page">
-     <Navbar activePage="summary" />
+      <Navbar activePage="summary" />
       <section className="summary-content">
         <div className="summary-options">
           <div className="summary-toggle">
-            <button
-              type="button"
-              className={view === "expense" ? "selected" : ""}
-              onClick={() => setView("expense")}
-            >
-              Expenses
-            </button>
-            <button
-              type="button"
-              className={view === "income" ? "selected" : ""}
-              onClick={() => setView("income")}
-            >
-              Income
-            </button>
+            <button type="button" className={type === "expenses" ? "selected" : ""} onClick={() => setType("expenses")}>Expenses</button>
+            <button type="button" className={type === "income" ? "selected" : ""} onClick={() => setType("income")}>Income</button>
           </div>
-
           <div className="summary-toggle period-toggle">
-            <button
-              type="button"
-              className={timeframe === "this" ? "selected" : ""}
-              onClick={() => setTimeframe("this")}
-            >
-              This Month
-            </button>
-            <button
-              type="button"
-              className={timeframe === "last" ? "selected" : ""}
-              onClick={() => setTimeframe("last")}
-            >
-              Last Month
-            </button>
+            <button type="button" className={period === "this" ? "selected" : ""} onClick={() => setPeriod("this")}>This Month</button>
+            <button type="button" className={period === "last" ? "selected" : ""} onClick={() => setPeriod("last")}>Last Month</button>
           </div>
         </div>
+
+        {error && <p className="summary-message error" role="alert">{error}</p>}
+        {loading && <p className="summary-message">Loading your summary…</p>}
 
         <div className="summary-grid">
           <section className="breakdown-card">
-            <p className="total-label">{view === "expense" ? "Total Spent" : "Total Income"}</p>
-            <strong className="total-spent">
-              {view === "expense" ? formatCurrency(currentTotals.expenses) : formatCurrency(currentTotals.income)}
-            </strong>
+            <p className="total-label">{type === "expenses" ? "Total Spent" : "Total Income"}</p>
+            <strong className="total-spent">{formatCurrency(summary.total)}</strong>
             <h1>Category Breakdown</h1>
             <div className="category-list">
-              {categories.map(([name, amount, percent]) => (
-                <div className="category-row" key={name}>
-                  <div>
-                    <span>{name}</span>
-                    <span>{amount}</span>
-                  </div>
-                  <div className="progress">
-                    <i style={{ width: `${percent}%` }} />
-                  </div>
-                </div>
-              ))}
+              {summary.categories.length === 0 && <p className="empty-summary">No {type} for this period.</p>}
+              {summary.categories.map(([name, amount]) => {
+                const percent = summary.total ? (amount / summary.total) * 100 : 0;
+                return <div className="category-row" key={name}>
+                  <div><span>{name}</span><span>{formatCurrency(amount)} ({percent.toFixed(0)}%)</span></div>
+                  <div className="progress"><i style={{ width: `${percent}%` }} /></div>
+                </div>;
+              })}
             </div>
           </section>
-          <aside className="balance-card">
-            <span>Available Balance</span>
-            <strong>{formatCurrency(currentTotals.balance)}</strong>
-          </aside>
+          <aside className="balance-card"><span>Available Balance</span><strong>{formatCurrency(summary.balance)}</strong></aside>
         </div>
       </section>
-      <Footer/>
+      <Footer />
     </main>
   );
 }
+
 export default Summary;

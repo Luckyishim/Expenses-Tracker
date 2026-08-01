@@ -1,11 +1,13 @@
-import express from 'express'
-import { getUsers, loginUser, registerUser } from '../controller/UserController';
+import express from "express";
+import { getCurrentUser, loginUser, registerUser, updateCurrentUser } from "../controller/UserController.js";
+import { requireAuth } from "../middleware/authMiddleware.js";
 
-
+// Defines public registration/login endpoints and protected current-user endpoints.
 const router = express.Router();
 
 router.post("/register", registerUser);
 router.post("/login", loginUser);
-router.get("/users", getUsers);
+router.get("/me", requireAuth, getCurrentUser);
+router.put("/me", requireAuth, updateCurrentUser);
 
 export default router;
