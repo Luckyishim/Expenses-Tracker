@@ -1,4 +1,4 @@
-.home-page {
+/* .home-page {
   min-height: 100vh;
   color: #292a27;
   background: #f8f7f0;
@@ -61,12 +61,13 @@
   stroke-width: 1.8;
   stroke-linecap: round;
   stroke-linejoin: round;
-}
-
+} */
+ 
 .dashboard {
-  width: min(646px, calc(100% - 40px));
-  margin: 19px auto;
-  flex: 1;
+  /* width: min(646px, calc(100% - 40px)); */
+  width: min(100%, 900px);
+  margin:  25px auto;
+  /* flex: 1; */
 }
 .summary-cards {
   display: grid;
@@ -88,7 +89,8 @@
 }
 .summary-card span {
   display: block;
-  font-size: 8px;
+  font-size: 15px;
+  margin: 6px 0;
 }
 .summary-card strong {
   display: block;
@@ -140,7 +142,7 @@
 .entry-switch {
   width: 164px;
   height: 30px;
-  margin: 20px auto;
+  margin: 25px auto;
   padding: 2px;
   border: 1px solid #e6e3da;
   border-radius: 20px;
@@ -152,7 +154,7 @@
   border-radius: 16px;
   color: #292c28;
   background: transparent;
-  font-size: 8px;
+  font-size: 12px;
   cursor: pointer;
 }
 .entry-switch .selected {
@@ -160,10 +162,13 @@
   background: #f8f7f0;
   box-shadow: 1px 1px 3px rgb(35 34 29 / 0.12);
 }
+.entry-switch .selected.is-income {
+  color: #789076;
+}
 
 .dashboard-content {
   display: grid;
-  grid-template-columns: 316px 1fr;
+  grid-template-columns: 430px 1fr;
   gap: 14px;
 }
 .expense-panel {
@@ -172,12 +177,12 @@
 }
 .expense-panel h1 {
   margin: 0 0 14px;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 500;
 }
 .expense-panel h1 span {
-  width: 13px;
-  height: 13px;
+  width: 15px;
+  height: 15px;
   margin-right: 5px;
   border: 1px solid #d18b8b;
   border-radius: 50%;
@@ -189,6 +194,10 @@
   line-height: 1;
   vertical-align: 1px;
 }
+.income-panel h1 span {
+  border-color: #789076;
+  color: #789076;
+}
 .expense-panel form,
 .expense-panel label {
   display: block;
@@ -196,7 +205,7 @@
 .expense-panel label {
   margin-top: 9px;
   color: #41423e;
-  font-size: 8px;
+  font-size: 13px;
 }
 .expense-panel input,
 .expense-panel textarea {
@@ -207,19 +216,21 @@
   outline: none;
   color: #3e403b;
   background: #faf9f3;
-  box-shadow: inset 1px 1px 2px rgb(69 64 48 / 0.11);
-  font: inherit;
+  box-shadow: 
+    inset 0 1px 2px #77756822,
+    0 2px 4px #77756818;
+  font: Arial, sans-serif;
 }
 .expense-panel input {
   height: 29px;
   padding: 0 9px;
-  font-size: 10px;
+  font-size: 12px;
 }
 .expense-panel textarea {
   height: 61px;
   padding: 9px;
   resize: none;
-  font-size: 9px;
+  font-size: 13px;
 }
 .expense-panel input::placeholder,
 .expense-panel textarea::placeholder {
@@ -234,7 +245,7 @@
   top: 12px;
   left: 10px;
   color: #4d4d49;
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 400;
 }
 .amount-input input {
@@ -260,13 +271,29 @@
   color: #cf8c8c;
   background: #faf9f4;
   box-shadow: 2px 3px 5px rgb(40 37 28 / 0.16);
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.7px;
   text-transform: uppercase;
   cursor: pointer;
+  transition: transform 160ms ease, background-color 160ms ease, box-shadow 160ms ease;
 }
-
+.add-transaction:hover {
+  background: #cf8c8c;
+  color: #fff;
+  box-shadow: 3px 4px 8px rgb(40 37 28 / 0.23);
+  transform: translateY(-1px);
+}
+.income-panel .add-transaction {
+  color: #789076;
+}
+.income-panel .add-transaction:hover {
+  background: #789076;
+  color: #fff;
+}
+.add-transaction:active {
+  transform: translateY(0);
+}
 .history-panel {
   min-height: 389px;
   padding: 21px;
@@ -278,12 +305,13 @@
 }
 .history-heading h2 {
   margin: 0;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 500;
 }
 .history-heading a {
   color: #4f644d;
-  font-size: 8px;
+  font-size: 13px;
+  font-weight: 700;
   text-decoration: none;
 }
 .empty-history {
@@ -291,9 +319,9 @@
   display: grid;
   place-items: center;
   color: #aaa99f;
-  font-size: 10px;
+  font-size: 14px;
 }
-.home-footer {
+/* .home-footer {
   height: 59px;
   padding: 0 60px;
   border-top: 1px solid #dedcd3;
@@ -307,31 +335,31 @@
 }
 .home-footer span {
   font-size: 9px;
-}
+} */
 
 @media (max-width: 650px) {
-  .home-header {
+  /* .home-header {
     padding: 0 16px;
   }
   .home-nav {
     gap: 13px;
-  }
+  } */
   .dashboard-content {
     grid-template-columns: 1fr;
   }
-  .home-footer {
+  /* .home-footer {
     height: auto;
     padding: 22px;
     gap: 10px;
     flex-direction: column;
     align-items: flex-start;
-  }
+  } */
   .summary-card strong {
     font-size: clamp(19px, 6vw, 30px);
   }
 }
 @media (max-width: 420px) {
-  .home-logo {
+  /* .home-logo {
     font-size: 13px;
   }
   .home-nav {
@@ -339,7 +367,7 @@
   }
   .header-actions {
     margin-left: auto;
-  }
+  } */
   .dashboard {
     width: min(100% - 24px, 646px);
   }

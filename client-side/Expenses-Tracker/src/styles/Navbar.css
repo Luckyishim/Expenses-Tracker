@@ -1,6 +1,6 @@
 .site-navbar {
-  height: 41px;
-  padding: 0 25px;
+  height: 70px;
+  padding:0 25px;
   border-bottom: 2px solid #eceae2;
   background: #fbfaf5;
   display: flex;
@@ -8,7 +8,7 @@
 }
 .site-brand {
   color: #4d684e;
-  font-size: 16px;
+  font-size: 25px;
   font-weight: 700;
   letter-spacing: -0.4px;
   text-decoration: none;
@@ -17,14 +17,14 @@
   height: 100%;
   margin: 0 auto;
   display: flex;
-  gap: 26px;
+  gap: 40px;
 }
 .site-nav-links a {
   height: 100%;
-  padding-top: 13px;
-  border-bottom: 1px solid transparent;
+  padding-top: 25px;
+  border-bottom: 3px solid transparent; 
   color: #30332e;
-  font-size: 8px;
+  font-size: 17px;
   text-decoration: none;
 }
 .site-nav-links a.active {
@@ -36,8 +36,8 @@
   gap: 15px;
 }
 .site-nav-actions a {
-  width: 17px;
-  height: 17px;
+  width: 30px;
+  height: 30px;
   padding: 3px;
   border-radius: 50%;
   color: #465b46;

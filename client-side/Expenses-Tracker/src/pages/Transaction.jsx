@@ -1,6 +1,6 @@
 import "../styles/Transaction.css";
-import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 const CategoryIcon = ({ type }) => {
   if (type === "food")
