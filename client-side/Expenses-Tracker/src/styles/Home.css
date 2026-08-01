@@ -62,12 +62,16 @@
   stroke-linecap: round;
   stroke-linejoin: round;
 } */
- 
+
 .dashboard {
   /* width: min(646px, calc(100% - 40px)); */
   width: min(100%, 900px);
   margin:  25px auto;
   /* flex: 1; */
+}
+/* Ensure pages using .home-page leave space for the fixed footer */
+.home-page {
+  padding-bottom: 100px;
 }
 .summary-cards {
   display: grid;

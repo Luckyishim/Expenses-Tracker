@@ -1,12 +1,18 @@
 .site-footer {
   min-height: 65px;
-  /* padding: 0 max(56px, calc((100% - 712px) / 2)); */
+  /* keep a fixed footer at the bottom of the viewport */
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 50;
   padding: 0 25px;
   border-top: 1px solid #deddd5;
   background: #f8f7f1;
   display: flex;
   align-items: center;
-  gap: 500px;
+  justify-content: space-between;
 }
 
 .site-footer strong {
