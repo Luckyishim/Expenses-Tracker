@@ -11,10 +11,18 @@ function Home() {
     <div>
       <Navbar activePage="home" />
       <section className="dashboard" aria-label="Financial overview">
+
+
         <div className="summary-cards">
-          <article className="summary-card expenses"><span>Expenses</span><strong>$2,450.00</strong></article>
-          <article className="summary-card income"><span>Income</span><strong>$5,200.00</strong></article>
-          <article className="summary-card balance"><span>Balance</span><strong>$2,750.00</strong></article>
+          <article className="summary-card expenses"><span>Expenses</span><strong>
+            $2,450.00
+          </strong></article>
+          <article className="summary-card income"><span>Income</span><strong>
+            $5,200.00
+          </strong></article>
+          <article className="summary-card balance"><span>Balance</span><strong>
+            $2,750.00
+          </strong></article>
         </div>
 
         <div className="entry-switch" aria-label="Transaction type">
