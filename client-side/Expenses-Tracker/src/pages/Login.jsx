@@ -1,6 +1,34 @@
 import "../styles/Login.css";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import axios from "axios";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import Eye_Closed from "../assets/Eye_Closed.png";
+import Eye from "../assets/Eye.png"
 
+// Validates data and sends users to the main page.
 function Login() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [showPassword, setShowPassword] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting }
+  } = useForm({ mode: "onBlur" });
+
+  const submitLogin = async (data) => {
+    setSubmitError("");
+
+    try {
+      await axios.post("http://localhost:5067/api/auth/login", data);
+      navigate("/home");
+    } catch (error) {
+      setSubmitError(error.response?.data?.message || "Unable to log in. Please try again.");
+    }
+  };
+
   return (
     <main className="login-page">
       <section className="login-content" aria-label="Money Tracker login">
@@ -15,40 +43,71 @@ function Login() {
           <p>Tactile Finance Management</p>
         </header>
 
-        <div className="login-card">
+        <form className="login-card" onSubmit={handleSubmit(submitLogin)} noValidate>
+          {location.state?.message && (
+            <p className="form-message success" role="status">{location.state.message}</p>
+          )}
+
           <div className="field-group">
             <label htmlFor="email">Email Address</label>
-            <div className="input-wrap">
+            <div className={`input-wrap${errors.email ? " error" : ""}`}>
               <svg aria-hidden="true" viewBox="0 0 24 24">
                 <rect x="3.5" y="5.5" width="17" height="13" rx="1.5" />
                 <path d="m4.5 7 7.5 5.5L19.5 7" />
               </svg>
-              <input id="email" type="email" placeholder="Enter your email" />
+              <input
+                id="email"
+                type="email"
+                placeholder="Enter your email"
+                autoComplete="email"
+                aria-invalid={Boolean(errors.email)}
+                {...register("email", {
+                  required: "Email is required",
+                  pattern: { value: /^\S+@\S+\.\S+$/, message: "Enter a valid email address" }
+                })}
+              />
             </div>
+            {errors.email && <p className="field-error">{errors.email.message}</p>}
           </div>
 
           <div className="field-group password-group">
-              <label htmlFor="password">Password</label>
-            <div className="input-wrap">
+            <label htmlFor="password">Password</label>
+            <div className={`input-wrap${errors.password ? " error" : ""}`}>
               <svg aria-hidden="true" viewBox="0 0 24 24">
                 <rect x="5.5" y="10.5" width="13" height="10" rx="1.5" />
                 <path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5M12 14.5v2" />
               </svg>
               <input
                 id="password"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 placeholder="Enter your password"
+                autoComplete="current-password"
+                aria-invalid={Boolean(errors.password)}
+                {...register("password", {
+                  required: "Password is required",
+                  minLength: { value: 8, message: "Password must be at least 8 characters" }
+                })}
               />
+              <button
+                type="button"
+                className="toggle-visibility"
+                onClick={() => setShowPassword((prev) => !prev)}
+              >
+                <img src={showPassword ? Eye_Closed : Eye} alt="" />
+              </button>
             </div>
+            {errors.password && <p className="field-error">{errors.password.message}</p>}
           </div>
 
-          <button className="login-button" type="button">
-            Log In <span>→</span>
+          {submitError && <p className="form-message error" role="alert">{submitError}</p>}
+
+          <button className="login-button" type="submit" disabled={isSubmitting}>
+            {isSubmitting ? "Logging In..." : "Log In"}
           </button>
-        </div>
+        </form>
 
         <p className="signup-copy">
-          Don't have an account? <a href="/create-account">Sign up</a>
+          Don't have an account? <Link to="/register">Sign up</Link>
         </p>
       </section>
     </main>
