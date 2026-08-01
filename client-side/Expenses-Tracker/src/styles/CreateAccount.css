@@ -1,39 +1,29 @@
 
 * {
   box-sizing: border-box;
-  
 }
 
 .create-account-page {
   min-height: 100vh;
   display: grid;
   place-items: center;
-  padding: 40px 20px;
+  padding: 42px 20px;
   background: #f4f2eb;
   color: #3d453c;
   font-family: Arial, sans-serif;
 }
-.create-account-card {
-  width: min(100%, 358px);
-  padding: 28px 29px 27px;
-  border-radius: 14px;
-  background: #f7f6ef;
-  box-shadow:
-    0 3px 6px #6865531d,
-    0 13px 20px #67645427;
-}
 .create-brand {
   text-align: center;
-  margin-bottom: 29px;
+  margin-bottom: 20px;
 }
 .brand-line {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 5px;
+  gap: 8px;
 }
 .brand-line svg {
-  width: 27px;
+  width: 40px;
   fill: none;
   stroke: #50694f;
   stroke-width: 2.3;
@@ -43,14 +33,25 @@
 .brand-line h1 {
   margin: 0;
   color: #50654e;
-  font-size: 17px;
+  font-size: 40px;
   letter-spacing: -0.6px;
   font-weight: 700;
 }
 .create-brand p {
-  margin: 13px 0 0;
+  margin: 13px;
   color: #74776f;
-  font-size: 10px;
+  font-size: 14px;
+}
+.create-account-card {
+  width: min(100%, 500px);
+  height: min(100%, 600px);
+  padding: 50px 50px 50px;
+  border-radius: 13px;
+  background: #f7f6ef;
+  box-shadow:
+   0 7px 50px #5956491c,
+    0 16px 70px #6a675728;
+    
 }
 .create-fields {
   display: grid;
@@ -58,13 +59,12 @@
 }
 .create-field label {
   display: block;
-  margin-bottom: 7px;
+  margin-bottom: 10px;
   color: #3d453c;
-  font-size: 9px;
-  font-weight: 500;
+  font-size: 13px;
 }
 .create-input {
-  height: 39px;
+  height: 43px;
   display: flex;
   align-items: center;
   gap: 9px;
@@ -72,8 +72,8 @@
   border-radius: 8px;
   background: #fff;
   box-shadow:
-    inset 0 1px 2px #77756820,
-    0 2px 4px #77756817;
+    inset 0 1px 2px #77756822,
+    0 2px 4px #77756818;
 }
 .create-input svg {
   width: 14px;
@@ -91,48 +91,12 @@
   outline: 0;
   background: transparent;
   color: #3e473d;
-  font:
-    400 11px "DM Sans",
-    sans-serif;
+  font: 12px Arial, sans-serif;
 }
 .create-input input::placeholder {
   color: #8e959f;
   opacity: 1;
 }
-.password-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
-}
-.password-row .create-field {
-  min-width: 0;
-}
-.password-row .create-input {
-  padding: 0 9px;
-  gap: 7px;
-}
-.password-row input {
-  font-size: 10px;
-}
-.terms {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin: 22px 0 31px;
-  color: #3d453c;
-  font-size: 9px;
-}
-.terms input {
-  appearance: none;
-  width: 17px;
-  height: 17px;
-  margin: 0;
-  border: 1px solid #e1e2dc;
-  border-radius: 6px;
-  background: #faf9f4;
-  box-shadow: inset 0 1px 2px #7775681b;
-}
-.terms a,
 .login-copy a {
   color: #4d674d;
   text-decoration: none;
@@ -145,20 +109,25 @@
   background: #4f694e;
   color: #fff;
   box-shadow: 0 3px 5px #40544054;
-  font:
-    500 12px "DM Sans",
-    sans-serif;
+  font-size: 14px;
+  cursor: pointer;
 }
 .create-button span {
   margin-left: 4px;
   font-size: 18px;
   vertical-align: -1px;
 }
+.create-button:hover{
+    background: #4b5f46;
+}
 .login-copy {
-  margin: 29px 0 1px;
+  margin: 27px ;
   text-align: center;
   color: #555b53;
-  font-size: 10px;
+  font-size: 13px;
+}
+.login-copy a {
+  font-weight: 700;
 }
 @media (max-width: 390px) {
   .create-account-page {
