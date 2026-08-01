@@ -2,6 +2,7 @@ import "../styles/Summary.css";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
+
 function Summary() {
   const categories = [
     ["Housing", "$1,800.00 (42%)", "42"],
@@ -11,7 +12,7 @@ function Summary() {
   ];
   return (
     <main className="summary-page">
-      <Navbar activePage="summary" />
+     <Navbar activePage="summary" />
       <section className="summary-content">
         <div className="summary-options">
           <div className="summary-toggle">
@@ -52,7 +53,7 @@ function Summary() {
           </aside>
         </div>
       </section>
-      <Footer />
+      <Footer/>
     </main>
   );
 }

@@ -3,9 +3,9 @@ import "../styles/Navbar.css";
 function Navbar({ activePage }) {
   return (
     <header className="site-navbar">
-      <a className="site-brand" href="/home">
+      <h1 className="site-brand">
         Money Tracker
-      </a>
+      </h1>
       <nav className="site-nav-links" aria-label="Main navigation">
         <a className={activePage === "home" ? "active" : ""} href="/home">
           Home
