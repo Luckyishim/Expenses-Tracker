@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "../styles/Transaction.css";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -26,6 +27,8 @@ const CategoryIcon = ({ type }) => {
 };
 
 function Transaction() {
+  const [activeView, setActiveView] = useState("expense");
+
   const transactions = [
     [
       "Food & Dining",
@@ -53,16 +56,30 @@ function Transaction() {
     ],
   ];
 
+  const visibleTransactions = transactions.filter(
+    ([, , , , , status]) => status === activeView,
+  );
+
   return (
     <main className="transactions-page">
       <Navbar activePage="transactions" />
 
       <section className="transactions-content" aria-label="Transactions">
         <div className="transaction-switch">
-          <button className="selected" type="button">
+          <button
+            className={activeView === "expense" ? "selected" : ""}
+            type="button"
+            onClick={() => setActiveView("expense")}
+          >
             Expenses
           </button>
-          <button type="button">Income</button>
+          <button
+            type="button"
+            className={activeView === "income" ? "selected is-income" : "is-income"}
+            onClick={() => setActiveView("income")}
+          >
+            Income
+          </button>
         </div>
         <form className="transaction-filters">
           <label>
@@ -99,7 +116,7 @@ function Transaction() {
               </tr>
             </thead>
             <tbody>
-              {transactions.map(
+              {visibleTransactions.map(
                 ([category, note, date, amount, type, status]) => (
                   <tr key={category}>
                     <td>
