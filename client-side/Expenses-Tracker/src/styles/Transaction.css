@@ -1,7 +1,6 @@
 .transactions-page {
   min-height: 100vh;
   color: #292a27;
-  background: #fbfaf5;
   display: flex;
   flex-direction: column;
 }

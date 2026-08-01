@@ -29,7 +29,7 @@ function Profile() {
               Monthly Budget
               <input type="text" value="$5,000.00" readOnly />
             </label>
-            <button type="button">Save Changes</button>
+            <button type="button" className="save-button">Save Changes</button>
           </div>
         </section>
         <aside className="account-card">
