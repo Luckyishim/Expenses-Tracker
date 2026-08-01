@@ -28,9 +28,7 @@ function Login() {
           </div>
 
           <div className="field-group password-group">
-            <div className="label-row">
               <label htmlFor="password">Password</label>
-            </div>
             <div className="input-wrap">
               <svg aria-hidden="true" viewBox="0 0 24 24">
                 <rect x="5.5" y="10.5" width="13" height="10" rx="1.5" />
@@ -47,31 +45,11 @@ function Login() {
           <button className="login-button" type="button">
             Log In <span>→</span>
           </button>
-
-          <div className="divider">
-            <span>OR CONTINUE WITH</span>
-          </div>
-          <div className="social-actions">
-            <button type="button" className="social-button">
-              <b className="google">G</b>Google
-            </button>
-            <button type="button" className="social-button">
-              <b className="facebook">▦</b>Facebook
-            </button>
-          </div>
         </div>
 
         <p className="signup-copy">
           Don't have an account? <a href="/create-account">Sign up</a>
         </p>
-        <div className="utility-buttons" aria-label="Display options">
-          <button type="button" aria-label="Language">
-            ◉
-          </button>
-          <button type="button" aria-label="Theme">
-            ☾
-          </button>
-        </div>
       </section>
     </main>
   );
