@@ -1,12 +1,10 @@
 .site-footer {
   min-height: 65px;
-  /* keep a fixed footer at the bottom of the viewport */
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  /* Stays below page content and is pushed down on short flex layouts. */
+  position: static;
+  flex-shrink: 0;
+  margin-top: auto;
   width: 100%;
-  z-index: 50;
   padding: 0 25px;
   border-top: 1px solid #deddd5;
   background: #f8f7f1;

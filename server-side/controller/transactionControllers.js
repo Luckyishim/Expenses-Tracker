@@ -1,8 +1,11 @@
 import Balance from "../model/Balance.js";
 
+// Calculates totals for either one user's transactions or all transactions when no user is supplied.
 export const getBalance = async (req, res) => {
     try {
+        const match = req.query.user ? { user: req.query.user } : {};
         const result = await Balance.aggregate([
+            { $match: match },
             {
                 $group: {
                     _id: "$type",

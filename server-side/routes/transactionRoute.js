@@ -4,10 +4,11 @@ import { getBalance } from "../controller/transactionControllers.js";
 
 const router = express.Router();
 
-// Get all transactions
+// Gets only the current user's transactions when a user query parameter is supplied.
 router.get('/', async (req, res) => {
     try {
-        const transactions = await Balance.find();
+        const filter = req.query.user ? { user: req.query.user } : {};
+        const transactions = await Balance.find(filter).sort({ date: -1, createdAt: -1 });
         res.status(200).json(transactions);
     } catch (error) {
         res.status(500).json({ error: 'Server error while fetching transactions' });

@@ -22,7 +22,8 @@ function Login() {
     setSubmitError("");
 
     try {
-      await axios.post("http://localhost:5067/api/auth/login", data);
+      const response = await axios.post("http://localhost:5067/api/auth/login", data);
+      localStorage.setItem("moneyTrackerUser", JSON.stringify(response.data.user));
       navigate("/home");
     } catch (error) {
       setSubmitError(error.response?.data?.message || "Unable to log in. Please try again.");
