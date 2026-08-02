@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { saveSession } from "../services/session";
+import { API_URL } from "../services/api";
 import Eye_Closed from "../assets/Eye_Closed.png";
 import Eye from "../assets/Eye.png"
 
@@ -23,7 +24,7 @@ function Login() {
     setSubmitError("");
 
     try {
-      const response = await axios.post("http://localhost:5067/api/auth/login", data);
+      const response = await axios.post(`${API_URL}/auth/login`, data);
       saveSession(response.data);
       navigate(location.state?.from || "/home", { replace: true });
     } catch (error) {

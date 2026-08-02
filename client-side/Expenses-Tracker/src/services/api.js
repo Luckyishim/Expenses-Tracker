@@ -1,7 +1,7 @@
 import { clearSession, getSession } from "./session";
 
 // Centralizes authenticated API requests so user IDs never come from form data.
-const API_URL = (import.meta.env.VITE_API_URL || "http://localhost:5067/api").replace(/\/$/, "");
+export const API_URL = (import.meta.env.VITE_API_URL || "http://localhost:5067/api").replace(/\/$/, "");
 
 const readBody = async (response) => response.json().catch(() => ({}));
 

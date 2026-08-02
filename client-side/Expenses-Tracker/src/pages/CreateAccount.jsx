@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { API_URL } from "../services/api";
 import Eye_Closed from "../assets/Eye_Closed.png";
 import Eye from "../assets/Eye.png"
 
@@ -28,10 +29,7 @@ function CreateAccount() {
     setSubmitError("");
 
     try {
-      const response = await axios.post(
-        "http://localhost:5067/api/auth/register",
-        data
-      );
+      const response = await axios.post(`${API_URL}/auth/register`, data);
 
       reset();
       navigate("/login", { state: { message: response.data.message } });

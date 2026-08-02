@@ -11,6 +11,7 @@
     "tsx": "^4.23.1"
   },
   "scripts": {
-    "dev": "tsx watch server.js"
+    "dev": "node --watch server.js",
+    "start": "node server.js"
   }
 }
