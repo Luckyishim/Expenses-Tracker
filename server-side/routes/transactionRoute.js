@@ -7,6 +7,7 @@ import { requireAuth } from "../middleware/jwtMiddleware.js";
 const router = express.Router();
 router.use(requireAuth);
 
+
 router.get("/", async (req, res) => {
   try {
     const transactions = await Balance.find({ user: req.user.id }).sort({ date: -1, createdAt: -1 });
@@ -18,6 +19,7 @@ router.get("/", async (req, res) => {
 
 router.get("/balance", getBalance);
 
+
 router.get("/:id", async (req, res) => {
   try {
     const transaction = await Balance.findOne({ _id: req.params.id, user: req.user.id });
@@ -27,6 +29,7 @@ router.get("/:id", async (req, res) => {
     res.status(400).json({ message: "Invalid transaction ID" });
   }
 });
+
 
 router.post("/", async (req, res) => {
   try {
@@ -39,6 +42,7 @@ router.post("/", async (req, res) => {
     res.status(500).json({ message: "Unable to create transaction" });
   }
 });
+
 
 router.put("/:id", async (req, res) => {
   try {
@@ -53,6 +57,7 @@ router.put("/:id", async (req, res) => {
     res.status(400).json({ message: "Unable to update transaction" });
   }
 });
+
 
 router.delete("/:id", async (req, res) => {
   try {

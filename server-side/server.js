@@ -24,6 +24,7 @@ app.use(express.json())
 app.use("/api/transactions", router)
 app.use("/api/auth", authRoute)
 
+
 app.listen(port, () => {
   console.log(`Server started successfully at port: ${port}`)
 })
