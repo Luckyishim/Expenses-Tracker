@@ -1,7 +1,7 @@
 import express from "express";
 import Balance from "../model/Balance.js";
 import { getBalance } from "../controller/transactionControllers.js";
-import { requireAuth } from "../middleware/authMiddleware.js";
+import { requireAuth } from "../middleware/jwtMiddleware.js";
 
 // Every transaction route requires a signed-in user and scopes records to that user.
 const router = express.Router();

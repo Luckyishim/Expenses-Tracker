@@ -1,7 +1,7 @@
 import { randomBytes, scrypt as scryptCallback, timingSafeEqual } from "crypto";
 import { promisify } from "util";
 import User from "../model/User.js";
-import { createAuthToken } from "../middleware/authMiddleware.js";
+import { createAuthToken } from "../middleware/jwtMiddleware.js";
 
 const scrypt = promisify(scryptCallback);
 
@@ -53,7 +53,7 @@ export const registerUser = async (req, res) => {
   }
 };
 
-// Verifies credentials and returns the signed session used by protected requests.
+// Verifies credentials and returns the signed JWT used by protected requests.
 export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
